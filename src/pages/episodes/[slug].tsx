@@ -6,6 +6,7 @@ import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
+import { PlayerContext, usePlayer } from '../../contexts/PlayerContext';
 
 import { api } from '../../services/api';
 
@@ -28,6 +29,8 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
+
   const router = useRouter();
 
   if (router.isFallback) {
@@ -45,7 +48,7 @@ export default function Episode({ episode }: EpisodeProps) {
 
         <Image width={700} height={160} src={episode.thumbnail} objectFit="cover" />
 
-        <button type="button">
+        <button type="button" onClick={() => play(episode)}>
           <img src="/play.svg" alt="Tocar episódio" />
         </button>
       </div>
